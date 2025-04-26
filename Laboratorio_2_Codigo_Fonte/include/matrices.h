@@ -62,12 +62,13 @@ glm::mat4 Matrix_Identity()
 glm::mat4 Matrix_Translate(float tx, float ty, float tz)
 {
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE TRANSLAÇÃO (3D) EM COORD. HOMOGÊNEAS
         // UTILIZANDO OS PARÂMETROS tx, ty e tz
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        0.0f , 0.0f , 0.0f , tx ,  // LINHA 1
+        0.0f , 0.0f , 0.0f , ty ,  // LINHA 2
+        0.0f , 0.0f , 0.0f , tz ,  // LINHA 3
+        0.0f , 0.0f , 0.0f , 1.0f    // LINHA 4
     );
 }
 
@@ -80,12 +81,13 @@ glm::mat4 Matrix_Translate(float tx, float ty, float tz)
 glm::mat4 Matrix_Scale(float sx, float sy, float sz)
 {
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE ESCALAMENTO (3D) EM COORD. HOMOGÊNEAS
         // UTILIZANDO OS PARÂMETROS sx, sy e sz
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        sx   , 0.0f , 0.0f , 0.0f ,  // LINHA 1
+        0.0f , sy   , 0.0f , 0.0f ,  // LINHA 2
+        0.0f , 0.0f , sz   , 0.0f ,  // LINHA 3
+        0.0f , 0.0f , 0.0f , 1.0f    // LINHA 4
     );
 }
 
@@ -102,12 +104,13 @@ glm::mat4 Matrix_Rotate_X(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE ROTAÇÃO (3D) EM TORNO DO EIXO X EM COORD.
         // HOMOGÊNEAS, UTILIZANDO OS PARÂMETROS c e s
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        1.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
+        0.0f , c    , -s   , 0.0f ,  // LINHA 2
+        0.0f , s    , c    , 0.0f ,  // LINHA 3
+        0.0f , 0.0f , 0.0f , 1.0f    // LINHA 4
     );
 }
 
@@ -124,12 +127,13 @@ glm::mat4 Matrix_Rotate_Y(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE ROTAÇÃO (3D) EM TORNO DO EIXO Y EM COORD.
         // HOMOGÊNEAS, UTILIZANDO OS PARÂMETROS c e s
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        c    , 0.0f , s    , 0.0f ,  // LINHA 1
+        0.0f , 1.0f , 0.0f , 0.0f ,  // LINHA 2
+        -s   , 0.0f , c    , 0.0f ,  // LINHA 3
+        0.0f , 0.0f , 0.0f , 1.0f    // LINHA 4
     );
 }
 
@@ -146,12 +150,13 @@ glm::mat4 Matrix_Rotate_Z(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE ROTAÇÃO (3D) EM TORNO DO EIXO Z EM COORD.
         // HOMOGÊNEAS, UTILIZANDO OS PARÂMETROS c e s
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        c    , -s   , 0.0f , 0.0f ,  // LINHA 1
+        s    , c    , 0.0f , 0.0f ,  // LINHA 2
+        0.0f , 0.0f , 1.0f , 0.0f ,  // LINHA 3
+        0.0f , 0.0f , 0.0f , 1.0f    // LINHA 4
     );
 }
 
@@ -162,8 +167,8 @@ float norm(glm::vec4 v)
     float vx = v.x;
     float vy = v.y;
     float vz = v.z;
-
-    return sqrt( vx*vx + /* PREENCHA AQUI o que falta para definir norma Euclidiana */ );
+    
+    return sqrt( vx*vx + vy*vy + vz*vz /* NOTE: Feito -> PREENCHA AQUI o que falta para definir norma Euclidiana */ );
 }
 
 // Matriz R de "rotação de um ponto" em relação à origem do sistema de
@@ -182,12 +187,13 @@ glm::mat4 Matrix_Rotate(float angle, glm::vec4 axis)
     float vz = v.z;
 
     return Matrix(
+        // NOTE: Feito
         // PREENCHA AQUI A MATRIZ DE ROTAÇÃO (3D) EM TORNO DO EIXO v EM COORD.
         // HOMOGÊNEAS, UTILIZANDO OS PARÂMETROS vx, vy, vz, c e s (FÓRMULA DE RODRIGUES)
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        vx*vx*(1-c)+c , vx*vy*(1-c)-vz*s , vx*vz*(1-c)-vy*s , 0.0f ,  // LINHA 1
+        vx*vy*(1-c)+vz*s , vy*vy*(1-c)+c , vy*vz*(1-c)-vx*s , 0.0f ,  // LINHA 2
+        vx*vz*(1-c)-vy*s , vy*vz*(1-c)+vx*s , vz*vz*(1-c)+c , 0.0f ,  // LINHA 3
+        0.0f             , 0.0f             , 0.0f          , 1.0f    // LINHA 4
     );
 }
 
@@ -205,7 +211,7 @@ glm::vec4 crossproduct(glm::vec4 u, glm::vec4 v)
     return glm::vec4(
         u2*v3 - u3*v2, // Primeiro coeficiente
         u3*v1 - u1*v3, // Segundo coeficiente
-        , // PREENCHA AQUI o terceiro coeficiente de um produto vetorial
+        u1*v2 - u2*v1, // NOTE: Feito -> PREENCHA AQUI o terceiro coeficiente de um produto vetorial
         0.0f // w = 0 para vetores.
     );
 }
@@ -229,7 +235,7 @@ float dotproduct(glm::vec4 u, glm::vec4 v)
         std::exit(EXIT_FAILURE);
     }
 
-    return u1*v1 + /* PREENCHA AQUI o que falta para definir o produto escalar */;
+    return u1*v1 + u2*v2 + u3*v3 /* NOTE: Feito -> PREENCHA AQUI o que falta para definir o produto escalar */;
 }
 
 // Matriz de mudança de coordenadas para o sistema de coordenadas da Câmera.
