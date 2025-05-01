@@ -1,0 +1,4 @@
+/home/pabloperalta/Faculdade/fcg/Labs-FCG/Laboratorio_2_Codigo_Fonte/build2/CMakeFiles/main.dir
+/home/pabloperalta/Faculdade/fcg/Labs-FCG/Laboratorio_2_Codigo_Fonte/build2/CMakeFiles/run.dir
+/home/pabloperalta/Faculdade/fcg/Labs-FCG/Laboratorio_2_Codigo_Fonte/build2/CMakeFiles/edit_cache.dir
+/home/pabloperalta/Faculdade/fcg/Labs-FCG/Laboratorio_2_Codigo_Fonte/build2/CMakeFiles/rebuild_cache.dir

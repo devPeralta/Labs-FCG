@@ -241,8 +241,8 @@ float dotproduct(glm::vec4 u, glm::vec4 v)
 // Matriz de mudança de coordenadas para o sistema de coordenadas da Câmera.
 glm::mat4 Matrix_Camera_View(glm::vec4 position_c, glm::vec4 view_vector, glm::vec4 up_vector)
 {
-    glm::vec4 w = /* PREENCHA AQUI o cálculo do vetor w */;
-    glm::vec4 u = /* PREENCHA AQUI o cálculo do vetor u */;
+    glm::vec4 w = -view_vector /* NOTE: Feito -> PREENCHA AQUI o cálculo do vetor w */;
+    glm::vec4 u = crossproduct(up_vector, w)/* NOTE: Feito -> PREENCHA AQUI o cálculo do vetor u */;
 
     // Normalizamos os vetores u e w
     w = w / norm(w);
@@ -271,11 +271,11 @@ glm::mat4 Matrix_Camera_View(glm::vec4 position_c, glm::vec4 view_vector, glm::v
         // ATENÇÃO: O produto escalar, computado pela função dotproduct(), está
         // definido somente para argumentos que são VETORES. Não existe produto
         // escalar de PONTOS.
-        //
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        // NOTE: Feito
+        ux, uy, uz, -dotproduct(u, position_c - origin_o), // LINHA 1
+        vx, vy, vz, -dotproduct(v, position_c - origin_o), // LINHA 2
+        wx, wy, wz, -dotproduct(w, position_c - origin_o), // LINHA 3
+        0.0f, 0.0f, 0.0f, 1.0f                             // LINHA 4
     );
 }
 
@@ -285,10 +285,11 @@ glm::mat4 Matrix_Orthographic(float l, float r, float b, float t, float n, float
     glm::mat4 M = Matrix(
         // PREENCHA AQUI A MATRIZ M DE PROJEÇÃO ORTOGRÁFICA (3D) UTILIZANDO OS
         // PARÂMETROS l,r,b,t,n,f 
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        // NOTE: Feito
+        2.0f/(r-l) , 0.0f       , 0.0f       , -(r+l)/(r-l), // LINHA 1
+        0.0f       , 2.0f/(t-b) , 0.0f       , -(t+b)/(t-b), // LINHA 2
+        0.0f       , 0.0f       , 2.0f/(f-n) , -(f+n)/(f-n), // LINHA 3
+        0.0f       , 0.0f       , 0.0f       , 1.0f          // LINHA 4
     );
 
     return M;
@@ -298,17 +299,18 @@ glm::mat4 Matrix_Orthographic(float l, float r, float b, float t, float n, float
 glm::mat4 Matrix_Perspective(float field_of_view, float aspect, float n, float f)
 {
     float t = fabs(n) * tanf(field_of_view / 2.0f);
-    float b = /* PREENCHA AQUI o parâmetro b */;
+    float b = -t/* NOTE: Feito -> PREENCHA AQUI o parâmetro b */;
     float r = t * aspect;
-    float l = /* PREENCHA AQUI o parâmetro l */;
+    float l = -r/* NOTE: Feito -> PREENCHA AQUI o parâmetro l */;
 
     glm::mat4 P = Matrix(
         // PREENCHA AQUI A MATRIZ P DE PROJEÇÃO PERSPECTIVA (3D) UTILIZANDO OS
         // PARÂMETROS n e f.
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 1
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 2
-        0.0f , 0.0f , 0.0f , 0.0f ,  // LINHA 3
-        0.0f , 0.0f , 0.0f , 0.0f    // LINHA 4
+        // NOTE: Feito
+        n    , 0.0f , 0.0f  , 0.0f,  // LINHA 1
+        0.0f , n    , 0.0f  , 0.0f,  // LINHA 2
+        0.0f , 0.0f , n + f , -f*n,  // LINHA 3
+        0.0f , 0.0f , 1.0f  , 0.0f   // LINHA 4
     );
 
     // A matriz M é a mesma computada acima em Matrix_Orthographic().
